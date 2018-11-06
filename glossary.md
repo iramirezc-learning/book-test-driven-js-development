@@ -1,4 +1,4 @@
-# Glosary
+# Glossary
 
 List of terms and words I didn't know.
 

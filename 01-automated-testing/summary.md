@@ -6,7 +6,7 @@
 
 #### `unit test` ...
 
-> a piece of code that test a pice of production code.
+> a piece of code that test a piece of production code.
 >
 > characteristics:
 > * are stored on disk along with a version control system.
@@ -17,7 +17,7 @@
 
 #### We run `tests` at any time ...
 
-> * when the implemetation (feature) is complete, to verify its correct behavior.
+> * when the implementation (feature) is complete, to verify its correct behavior.
 > * when the implementation changes, to verify its behavior is intact.
 > * when new units are added to the system, to verify it still fulfills its intended purpose.
 
@@ -51,7 +51,7 @@
 
 #### `test case` ...
 
-> a set of related test fuctions/methods
+> a set of related test functions/methods
 
 #### `test suites` ...
 
@@ -85,7 +85,7 @@
 >
 > automated testing allows us to write a test once and run it as many times as we wish
 
-#### `regresion testing` ...
+#### `regression testing` ...
 
 > by "trapping" a bug in a test, our test suite will notify us if the bug ever makes a reappearance.
 >
@@ -109,7 +109,7 @@
 
 #### `cross-browser testing` ...
 
-> make use of a `test runner` to automate tests accross multiple user agents aka browsers.
+> make use of a `test runner` to automate tests across multiple user agents aka browsers.
 
 #### more benefits of `well-written tests` ...
 

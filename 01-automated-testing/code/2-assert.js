@@ -1,14 +1,13 @@
-function assert(message, expr) {
+function assert (message, expr) {
   if (!expr) {
-    throw new Error(message);
+    throw new Error(message)
   }
 
-  assert.count++;
+  assert.count++
 
-  return true;
+  return true
 }
 
-assert.count = 0;
+assert.count = 0
 
-
-module.exports = assert;
+module.exports = assert
