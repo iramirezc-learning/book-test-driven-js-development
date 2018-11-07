@@ -8,4 +8,4 @@ External resources recommended in the book.
 
 ## Chapter 2: The Test-Driven Development Process
 
-* none yet
+* **Book:** _Test Driven Development by Example. Kent Beck_
