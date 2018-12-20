@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "test:spec": "mocha './**/*.spec.js'",
+    "test": "mocha './**/*.test.js'"
+  }
+}

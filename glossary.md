@@ -82,6 +82,34 @@ Example:
 
 > _No need for an HTML **fixture** ..._
 
+## Chapter 4: Test to Learn
+
+### iffy
+
+> full of uncertainty
+
+Translation:
+
+> dudosa
+
+Example:
+
+> _... can help us control **iffy** situations ..._
+
+---
+
+### skew (verb)
+
+> suddenly change direction or position
+
+Translation:
+
+> desvirtuar, sesgar, torcerse
+
+Example:
+
+> _To avoid having the function call **skew** tests too much ..._
+
 ---
 
 ### word
