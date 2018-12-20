@@ -66,6 +66,24 @@ Example:
 
 ## Chapter 2: The Test-Driven Development Process
 
+left in blank
+
+## Chapter 3: Tools of the Trade
+
+### fixture
+
+> a piece of equipment or furniture which is fixed in position in a building or vehicle
+
+Translation:
+
+> accesorio
+
+Example:
+
+> _No need for an HTML **fixture** ..._
+
+---
+
 ### word
 
 > definition
