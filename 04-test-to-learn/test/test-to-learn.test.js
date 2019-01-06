@@ -3,8 +3,8 @@
 let assert = require('assert')
 
 describe('Chapter 04', () => {
-  describe('Array', function () {
-    describe('#splice()', function () {
+  describe('4.1 Exploring JavaScript with Unit Tests', function () {
+    describe('Array#splice()', function () {
       it('should modify array', function () {
         let arr = [1, 2, 3, 4, 5]
         arr.splice(2, 3)
