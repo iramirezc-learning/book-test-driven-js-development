@@ -1,4 +1,5 @@
-/* globals describe it */
+/* globals describe it after */
+/* eslint-disable no-extend-native */
 
 const assert = require('assert')
 
@@ -159,6 +160,7 @@ describe('Chapter 05', () => {
     })
 
     describe('String.prototype.trim: function expressions revisited', () => {
+      let originalTrim = String.prototype.trim
 
       describe('trim function conditional assignment', () => {
         let trim
@@ -193,14 +195,24 @@ describe('Chapter 05', () => {
         })
       })
       describe('String.prototype.trim', () => {
-        if (!String.prototype.trim) {
-          /* eslint-disable no-extend-native */
+        if (String.prototype.trim) {
           String.prototype.trim = function trim () {
             return this.replace(/^\s+|\s+$/g, '')
           }
         }
         it('should trim a text', () => {
           assert.strictEqual('   hola   '.trim(), 'hola')
+          assert.notStrictEqual(String.prototype.trim, originalTrim)
+        })
+        after(() => {
+          // reestablish String.prototype.trim
+          String.prototype.trim = originalTrim
+        })
+      })
+
+      describe('reestablish String.prototype.trim', () => {
+        it('String.prototype.trim should be reestablished to the original', () => {
+          assert.strictEqual(originalTrim, String.prototype.trim)
         })
       })
     })
@@ -224,12 +236,18 @@ describe('Chapter 05', () => {
 
         assert.strictEqual(Number.isNaN(diameter()), true)
       })
+
       it('should implicit bind to the "global" object', () => {
         var diameter = circle.diameter
         // declare radius in the global scope
         radius = 5 // eslint-disable-line
 
         assert.strictEqual(diameter(), 10)
+      })
+
+      after(() => {
+        // remove radius from global
+        delete global['radius']
       })
     })
 
