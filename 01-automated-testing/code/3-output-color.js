@@ -1,5 +1,4 @@
 /* eslint-disable no-extend-native */
-
 Object.defineProperties(String.prototype, {
   red: {
     get: function () {
@@ -12,6 +11,7 @@ Object.defineProperties(String.prototype, {
     }
   }
 })
+/* eslint-enable no-extend-native */
 
 function output (text, color) {
   text = String(text)

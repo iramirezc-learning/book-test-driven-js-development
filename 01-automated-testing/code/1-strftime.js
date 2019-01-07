@@ -1,5 +1,4 @@
 /* eslint-disable no-extend-native */
-
 Date.prototype.strftime = (function () {
   function strftime (format) {
     const date = this
@@ -77,3 +76,4 @@ Date.prototype.strftime = (function () {
 
   return strftime
 }())
+/* eslint-enable no-extend-native */

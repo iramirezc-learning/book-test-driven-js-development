@@ -1,5 +1,4 @@
 /* globals describe it after */
-/* eslint-disable no-extend-native */
 
 const assert = require('assert')
 
@@ -196,17 +195,21 @@ describe('Chapter 05', () => {
       })
       describe('String.prototype.trim', () => {
         if (String.prototype.trim) {
+          /* eslint-disable no-extend-native */
           String.prototype.trim = function trim () {
             return this.replace(/^\s+|\s+$/g, '')
           }
+          /* eslint-enable no-extend-native */
         }
         it('should trim a text', () => {
           assert.strictEqual('   hola   '.trim(), 'hola')
           assert.notStrictEqual(String.prototype.trim, originalTrim)
         })
         after(() => {
+          /* eslint-disable no-extend-native */
           // reestablish String.prototype.trim
           String.prototype.trim = originalTrim
+          /* eslint-enable no-extend-native */
         })
       })
 
@@ -282,9 +285,11 @@ describe('Chapter 05', () => {
 
     describe('using primitives as "this"', () => {
       describe('boolean test', () => {
+        /* eslint-disable no-extend-native */
         Boolean.prototype.not = function () {
           return !this
         }
+        /* eslint-enable no-extend-native */
 
         it('should flip the value of true', () => {
           assert.strictEqual(true.not(), false)
@@ -298,9 +303,13 @@ describe('Chapter 05', () => {
           // assert.strictEqual(false.not(), true)
           // assert.strictEqual(Boolean.prototype.not.call(false), true)
           // however here is a possible solution
+
+          /* eslint-disable no-extend-native */
           Boolean.prototype.not = function () {
             return !this.valueOf()
           }
+          /* eslint-enable no-extend-native */
+
           assert.strictEqual(false.not(), true)
           assert.strictEqual(Boolean.prototype.not.call(false), true)
         })
