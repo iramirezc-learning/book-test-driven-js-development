@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "bench:loops": "node 04-test-to-learn/benchmarks/loops.js",
     "test:spec": "mocha './**/*.spec.js'",
     "test": "mocha './**/*.test.js'"
   }
