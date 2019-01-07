@@ -159,8 +159,6 @@ describe('Chapter 05', () => {
     })
 
     describe('String.prototype.trim: function expressions revisited', () => {
-      let originalTrim = String.prototype.trim
-
       describe('trim function conditional assignment', () => {
         let trim
 
@@ -191,31 +189,6 @@ describe('Chapter 05', () => {
             }
           }
           assert.strictEqual(trim('   hola   '), 'hola') // eslint-disable-line
-        })
-      })
-      describe('String.prototype.trim', () => {
-        if (String.prototype.trim) {
-          /* eslint-disable no-extend-native */
-          String.prototype.trim = function trim () {
-            return this.replace(/^\s+|\s+$/g, '')
-          }
-          /* eslint-enable no-extend-native */
-        }
-        it('should trim a text', () => {
-          assert.strictEqual('   hola   '.trim(), 'hola')
-          assert.notStrictEqual(String.prototype.trim, originalTrim)
-        })
-        after(() => {
-          /* eslint-disable no-extend-native */
-          // reestablish String.prototype.trim
-          String.prototype.trim = originalTrim
-          /* eslint-enable no-extend-native */
-        })
-      })
-
-      describe('reestablish String.prototype.trim', () => {
-        it('String.prototype.trim should be reestablished to the original', () => {
-          assert.strictEqual(originalTrim, String.prototype.trim)
         })
       })
     })
