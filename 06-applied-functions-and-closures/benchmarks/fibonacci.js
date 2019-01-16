@@ -3,7 +3,7 @@ const fibonaccies = require('../../lib/fibonaccies')
 
 // Benchmarks
 // ==================================================
-const N = 40
+const N = 30
 const tests = {}
 
 for (let f in fibonaccies) {
