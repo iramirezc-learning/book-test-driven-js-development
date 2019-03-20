@@ -4,9 +4,26 @@
 
 ### 7.1 Objects & Properties
 
-#### `subtitle 7.1`
+#### Object literal
 
-> definition
+example:
+
+```js
+var car = {
+  model: {
+    year: "1998",
+    make: "Ford",
+    model: "Mondeo"
+  },
+  color: 'Red',
+  seats: 5,
+  doors: 5,
+  accessories: ['Air Condition', 'Electric Windows'],
+  drive () {
+    console.log('Vroooom!')
+  }
+}
+```
 
 ### 7.2 Creating Objects with Constructors
 
