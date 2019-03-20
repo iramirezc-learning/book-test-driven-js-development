@@ -27,9 +27,37 @@ var car = {
 
 ### 7.2 Creating Objects with Constructors
 
-#### `subtitle 7.2`
+#### constructors vs functions
 
-> definition
+> JavaScript does not make distinction between constructors and normal functions, any function can be called with the `new` operator, however there's a convention to capitalize the name of the functions that are used as constructors
+
+example:
+
+```js
+function Car(model) {
+  this.model = model;
+}
+
+function call(to) {
+  // make a call
+}
+
+// function used as constructor
+var car = new Car('ioniq');
+
+call('mom');
+```
+
+#### detecting constructor misuse
+
+```js
+function Circle(radius) {
+  if (!(this instanceof Circle)) {
+    return new Circle(radius);
+  }
+  this.radius = radius;
+}
+```
 
 ### 7.3 Pseudo-Classical Inheritance
 
