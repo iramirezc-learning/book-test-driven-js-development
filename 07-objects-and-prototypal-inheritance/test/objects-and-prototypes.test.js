@@ -351,6 +351,12 @@ describe('Chapter 07', () => {
           assert.strictEqual(car.__proto__.__proto__.__proto__, null)
         })
 
+        it('should have a property "__proto__" that is the same as Object.getPrototypeOf()', () => {
+          var Car = function () { /* noop */ }
+          var car = new Car()
+          assert.strictEqual(car.__proto__, Object.getPrototypeOf(car))
+        })
+
         it('should have a property "constructor" that points to its Constructor function', () => {
           var obj = {}
           assert.strictEqual(obj.constructor, Object)
@@ -415,7 +421,273 @@ describe('Chapter 07', () => {
   })
 
   describe('7.3 Pseudo-Classical Inheritance', () => {
+    describe('the intermediate constructor', () => {
+      it('should inherit methods', () => {
+        var Circle = function Circle (radius) {
+          this.radius = radius
+        };
+        (function (p) {
+          p.diameter = function () {
+            return this.radius * 2
+          }
+        }(Circle.prototype))
+        var Sphere = function Sphere (radius) {
+          this.radius = radius
+        }
+        // intermediate constructor that borrows Circle.prototype.
+        Sphere.prototype = (function () {
+          // create a function
+          function F () { }
+          // the function will have a prototype set to {}
+          // override the prototype using the Circle.prototype
+          // to inherit methods from Circle
+          F.prototype = Circle.prototype
+          // now return an instance of that blank function F
+          // that will be an object which internally will have
+          // the __proto__ set to Circle.prototype
+          return new F()
+        }())
+        // Don't forget the constructor - else it will resolve as
+        // Circle through the prototype chain
+        Sphere.prototype.constructor = Sphere
 
+        var sphere = new Sphere(6)
+        assert.strictEqual(sphere instanceof Sphere, true)
+        assert.strictEqual(sphere instanceof Circle, true)
+        assert.strictEqual(sphere instanceof Object, true)
+        assert.strictEqual(sphere.diameter(), 12)
+      })
+    })
+    describe('the inherit function', () => {
+      after(() => {
+        delete Function.prototype.inherit
+      })
+      it('should inherit methods', () => {
+        /* eslint-disable no-extend-native */
+        if (!Function.prototype.inherit) {
+          (function () {
+            function F () { /* intermediate constructor */ }
+            Function.prototype.inherit = function (parentFunction) {
+              F.prototype = parentFunction.prototype
+              this.prototype = new F()
+              this.prototype.constructor = this
+            }
+          }())
+        }
+        /* eslint-enable no-extend-native */
+        var Circle = function Circle (radius) {
+          this.radius = radius
+        };
+        (function (p) {
+          p.diameter = function () {
+            return this.radius * 2
+          }
+        }(Circle.prototype))
+        var Sphere = function Sphere (radius) {
+          this.radius = radius
+        }
+        Sphere.inherit(Circle)
+
+        var sphere = new Sphere(6)
+        assert.strictEqual(sphere instanceof Sphere, true)
+        assert.strictEqual(sphere instanceof Circle, true)
+        assert.strictEqual(sphere instanceof Object, true)
+        assert.strictEqual(sphere.diameter(), 12)
+      })
+    })
+
+    describe('implementing super emulation', () => {
+      after(() => {
+        delete Function.prototype.inherit
+      })
+      it('should inherit methods', () => {
+        /* eslint-disable no-extend-native */
+        if (!Function.prototype.inherit) {
+          (function () {
+            function F () { /* intermediate constructor */ }
+            Function.prototype.inherit = function (parentFunction) {
+              F.prototype = parentFunction.prototype
+              this.prototype = new F()
+              this.prototype.constructor = this
+              this.prototype._super = parentFunction.prototype
+            }
+          }())
+        }
+        /* eslint-enable no-extend-native */
+        var Circle = function Circle (radius) {
+          this.radius = radius
+        };
+
+        (function (p) {
+          p.diameter = function () {
+            return this.radius * 2
+          }
+          p.circumference = function () {
+            return this.diameter() * Math.PI
+          }
+          p.area = function () {
+            return this.radius * this.radius * Math.PI
+          }
+        }(Circle.prototype))
+
+        var Sphere = function Sphere (radius) {
+          Circle.call(this, radius)
+        }
+
+        Sphere.inherit(Circle);
+
+        (function (p) {
+          p.area = function () {
+            return this._super.area.call(this) * 4
+          }
+        }(Sphere.prototype))
+
+        var sphere = new Sphere(3)
+        assert.strictEqual(sphere instanceof Sphere, true)
+        assert.strictEqual(sphere instanceof Circle, true)
+        assert.strictEqual(sphere instanceof Object, true)
+        assert.strictEqual(sphere.diameter(), 6)
+        assert.strictEqual(Math.round(sphere.area()), 113)
+      })
+    })
+
+    describe('implementing the _super method', () => {
+      after(() => {
+        delete Function.prototype.inheritFrom
+      })
+      it('should inherit methods', () => {
+        /* eslint-disable no-extend-native */
+        if (!Function.prototype.inheritFrom) {
+          (function () {
+            function F () { /* intermediate constructor */ }
+            Function.prototype.inheritFrom = function (parentFunction, methods) {
+              F.prototype = parentFunction.prototype
+              this.prototype = new F()
+              this.prototype.constructor = this
+              var subProto = this.prototype
+              // attach _.super to point to parentFunction with the same name
+              tddjs.each(methods, (name, method) => {
+                // wrap the original method
+                subProto[name] = function () {
+                  var returnValue
+                  // backup whatever is in the _super function
+                  var oldSuper = this._super
+                  // override the _super with the parent function method
+                  // so it can be available when calling this method
+                  this._super = parentFunction.prototype[name]
+                  // now, try to execute the function as normal
+                  try {
+                    // get the returned value from the original method
+                    returnValue = method.apply(this, arguments)
+                  } finally {
+                    // restore the old super
+                    this._super = oldSuper
+                  }
+
+                  return returnValue
+                }
+              })
+            }
+          }())
+        }
+        /* eslint-enable no-extend-native */
+        var Person = function (name) {
+          this.name = name
+        }
+
+        Person.prototype = {
+          constructor: Person,
+          getName () {
+            return this.name
+          },
+          speak () {
+            return 'Hello'
+          }
+        }
+
+        var LoudPerson = function (name) {
+          Person.call(this, name)
+        }
+
+        LoudPerson.inheritFrom(Person, {
+          getName () {
+            return this._super().toUpperCase()
+          },
+          speak () {
+            return this._super() + '!!!'
+          }
+        })
+
+        var loudPerson = new LoudPerson('Rick')
+        assert.strictEqual(loudPerson instanceof LoudPerson, true)
+        assert.strictEqual(loudPerson instanceof Person, true)
+        assert.strictEqual(loudPerson instanceof Object, true)
+        assert.strictEqual(loudPerson.getName(), 'RICK')
+        assert.strictEqual(loudPerson.speak(), 'Hello!!!')
+      })
+    })
+
+    describe('implementing the _super helper', () => {
+      after(() => {
+        delete Function.prototype.inherit
+      })
+      it('should inherit methods', () => {
+        /* eslint-disable no-extend-native */
+        if (!Function.prototype.inherit) {
+          (function () {
+            function F () { /* intermediate constructor */ }
+            Function.prototype.inherit = function (parentFunction) {
+              F.prototype = parentFunction.prototype
+              this.prototype = new F()
+              this.prototype.constructor = this
+              this.prototype._super = parentFunction.prototype
+            }
+          }())
+        }
+        var _super = function (object, methodName) {
+          var method = object._super && object._super[methodName]
+          if (typeof method !== 'function') {
+            return
+          }
+          var args = Array.prototype.slice.call(arguments, 2)
+          return method.apply(object, args)
+        }
+
+        var Person = function (name) {
+          this.name = name
+        }
+
+        Person.prototype = {
+          constructor: Person,
+          getName () {
+            return this.name
+          },
+          speak () {
+            return 'Hello'
+          }
+        }
+
+        var LoudPerson = function (name) {
+          _super(this, 'constructor', name)
+        }
+
+        LoudPerson.inherit(Person)
+
+        LoudPerson.prototype.getName = function () {
+          return _super(this, 'getName').toUpperCase()
+        }
+        LoudPerson.prototype.speak = function () {
+          return _super(this, 'speak') + '!!!'
+        }
+
+        var loudPerson = new LoudPerson('Rick')
+        assert.strictEqual(loudPerson instanceof LoudPerson, true)
+        assert.strictEqual(loudPerson instanceof Person, true)
+        assert.strictEqual(loudPerson instanceof Object, true)
+        assert.strictEqual(loudPerson.getName(), 'RICK')
+        assert.strictEqual(loudPerson.speak(), 'Hello!!!')
+      })
+    })
   })
 
   describe('7.4 Encapsulation and Information Hiding', () => {

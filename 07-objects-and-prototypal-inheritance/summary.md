@@ -61,9 +61,176 @@ function Circle(radius) {
 
 ### 7.3 Pseudo-Classical Inheritance
 
-#### `subtitle 7.3`
+#### the intermediate constructor
 
-> definition
+```js
+var Circle = function Circle (radius) {
+  this.radius = radius
+};
+(function (p) {
+  p.diameter = function () {
+    return this.radius * 2
+  }
+}(Circle.prototype))
+
+var Sphere = function Sphere (radius) {
+  this.radius = radius
+}
+Sphere.prototype = (function () {
+  function F () { }
+  F.prototype = Circle.prototype
+  return new F()
+}())
+Sphere.prototype.constructor = Sphere
+
+var sphere = new Sphere(6)
+sphere.diameter() // 12
+```
+
+#### the `inherit` function with `_super` implementation
+
+```js
+if (!Function.prototype.inherit) {
+  (function () {
+    function F () { /* intermediate constructor */ }
+    Function.prototype.inherit = function (parentFunction) {
+      F.prototype = parentFunction.prototype
+      this.prototype = new F()
+      this.prototype.constructor = this
+      this.prototype._super = parentFunction.prototype
+    }
+  }())
+}
+var Circle = function Circle (radius) {
+  this.radius = radius
+};
+
+(function (p) {
+  p.diameter = function () {
+    return this.radius * 2
+  }
+  p.circumference = function () {
+    return this.diameter() * Math.PI
+  }
+  p.area = function () {
+    return this.radius * this.radius * Math.PI
+  }
+}(Circle.prototype))
+
+var Sphere = function Sphere (radius) {
+  Circle.call(this, radius)
+}
+
+Sphere.inherit(Circle);
+
+(function (p) {
+  p.area = function () {
+    return this._super.area.call(this) * 4
+  }
+}(Sphere.prototype))
+
+var sphere = new Sphere(3)
+sphere.diameter() // 6
+sphere.area() // 113.09...
+```
+
+#### the `_super` method
+
+> THIS IS NOT RECOMMENDED FOR PRODUCTION as it is not performant
+>
+> Downside for this is that inheritance is only static. if you would like to add more methods to the Person class, you will need to redefine that method again in the LoudPerson class. See the next note "the `_super` method helper"
+
+```js
+if (!Function.prototype.inheritFrom) {
+  (function () {
+    function F () { /* intermediate constructor */ }
+    Function.prototype.inheritFrom = function (parentFunction, methods) {
+      F.prototype = parentFunction.prototype
+      this.prototype = new F()
+      this.prototype.constructor = this
+      var subProto = this.prototype
+      tddjs.each(methods, (name, method) => {
+        subProto[name] = function () {
+          var returnValue
+          var oldSuper = this._super
+          this._super = parentFunction.prototype[name]
+          try {
+            returnValue = method.apply(this, arguments)
+          } finally {
+            this._super = oldSuper
+          }
+          return returnValue
+        }
+      })
+    }
+  }())
+}
+var Person = function (name) {
+  this.name = name
+}
+
+Person.prototype = {
+  constructor: Person,
+  getName () {
+    return this.name
+  },
+  speak () {
+    return 'Hello'
+  }
+}
+
+var LoudPerson = function (name) {
+  Person.call(this, name)
+}
+
+LoudPerson.inheritFrom(Person, {
+  getName () {
+    return this._super().toUpperCase()
+  },
+  speak () {
+    return this._super() + '!!!'
+  }
+})
+
+var loudPerson = new LoudPerson('Rick')
+loudPerson.getName() // 'RICK'
+loudPerson.speak() // 'Hello!!!'
+```
+
+#### the `_super` method helper
+
+> this `_super` method uses the implementation of the `inherit` (not the `inheritFrom`) function from the two previous examples
+
+```js
+function _super(object, methodName) {
+  var method = object._super && object._super[methodName]
+
+  if (typeof method !== 'function') {
+    return
+  }
+
+  // cut the first two arguments (object and methodName)
+  var args = Array.prototype.slice.call(arguments, 2)
+
+  return method.apply(object, args)
+}
+
+// usage
+function LoudPerson(name) {
+  _super(this, 'constructor', name)
+}
+LoudPerson.inherit(Person)
+LoudPerson.prototype.getName = function() {
+  return _super(this, 'getName').toUpperCase()
+}
+LoudPerson.prototype.speak = function() {
+  return _super(this, 'speak') + '!!!'
+}
+var loudPerson = new LoudPerson('Rick')
+loudPerson.getName() // "RICK"
+loudPerson.speak() // "Hello!!!"
+
+```
 
 ### 7.4 Encapsulation & Information Hiding
 
