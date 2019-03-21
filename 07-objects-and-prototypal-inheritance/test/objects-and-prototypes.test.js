@@ -691,7 +691,87 @@ describe('Chapter 07', () => {
   })
 
   describe('7.4 Encapsulation and Information Hiding', () => {
+    describe('private methods', () => {
+      it('should encapsulate private methods', () => {
+        function Circle (radius) {
+          this.radius = radius
+        }
 
+        (function (p) {
+          // this is the private function
+          function ensureValidRadius (radius) {
+            return typeof radius === 'number' && radius > 0
+          }
+          // these functions are public
+          p.getRadius = function () {
+            return this.radius
+          }
+          p.setRadius = function (newRadius) {
+            if (!ensureValidRadius(newRadius)) {
+              throw new TypeError('radius should be greater than 0')
+            }
+            this.radius = newRadius
+          }
+        })(Circle.prototype)
+
+        var circle = new Circle(3)
+        assert.strictEqual(circle.getRadius(), 3)
+        circle.setRadius(6)
+        assert.strictEqual(circle.getRadius(), 6)
+        assert.throws(() => {
+          circle.setRadius(0)
+        }, /TypeError/)
+      })
+    })
+
+    describe('functional inheritance', () => {
+      it('should inherit properties from circle', () => {
+        function circle (radius) {
+          function getSetRadius () {
+            // I'm avoiding validation here
+            if (arguments.length > 0) {
+              radius = arguments[0]
+            }
+            return radius
+          }
+
+          function diameter () {
+            return radius * 2
+          }
+
+          function area () {
+            return radius * radius * Math.PI
+          }
+
+          return {
+            radius: getSetRadius,
+            diameter,
+            area
+          }
+        }
+
+        function sphere (radius) {
+          var sphereObj = circle(radius)
+          var circleArea = sphereObj.area
+
+          function area () {
+            return 4 * circleArea.call(this)
+          }
+
+          sphereObj.area = area
+
+          return sphereObj
+        }
+
+        var circle1 = circle(6)
+        assert.strictEqual(circle1.radius(), 6)
+        assert.strictEqual(circle1.radius(12), 12)
+        assert.strictEqual(circle1.diameter(), 24)
+
+        var sphere1 = sphere(3)
+        assert.strictEqual(Math.round(sphere1.area()), 113)
+      })
+    })
   })
 
   describe('7.5 Object Composition and Mixins', () => {

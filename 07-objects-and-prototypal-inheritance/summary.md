@@ -64,7 +64,7 @@ function Circle(radius) {
 #### the intermediate constructor
 
 ```js
-var Circle = function Circle (radius) {
+function Circle (radius) {
   this.radius = radius
 };
 (function (p) {
@@ -73,7 +73,7 @@ var Circle = function Circle (radius) {
   }
 }(Circle.prototype))
 
-var Sphere = function Sphere (radius) {
+function Sphere (radius) {
   this.radius = radius
 }
 Sphere.prototype = (function () {
@@ -101,7 +101,7 @@ if (!Function.prototype.inherit) {
     }
   }())
 }
-var Circle = function Circle (radius) {
+function Circle (radius) {
   this.radius = radius
 };
 
@@ -117,7 +117,7 @@ var Circle = function Circle (radius) {
   }
 }(Circle.prototype))
 
-var Sphere = function Sphere (radius) {
+function Sphere (radius) {
   Circle.call(this, radius)
 }
 
@@ -165,7 +165,7 @@ if (!Function.prototype.inheritFrom) {
     }
   }())
 }
-var Person = function (name) {
+function Person (name) {
   this.name = name
 }
 
@@ -179,7 +179,7 @@ Person.prototype = {
   }
 }
 
-var LoudPerson = function (name) {
+function LoudPerson (name) {
   Person.call(this, name)
 }
 
@@ -234,9 +234,117 @@ loudPerson.speak() // "Hello!!!"
 
 ### 7.4 Encapsulation & Information Hiding
 
-#### `subtitle 7.4`
+#### private methods
 
-> definition
+> nothing new, just encapsulate the funtion inside a closure
+
+Example:
+
+```js
+function Circle(radius) {
+  this.radius = radius
+}
+
+(function (p) {
+  // this is the private function
+  function ensureValidRadius(radius) {
+    return typeof radius === 'number' && radius > 0
+  }
+  // these functions are public
+  p.getRadius = function () {
+    return this.radius
+  }
+  p.setRadius = function (newRadius) {
+    if (!ensureValidRadius(newRadius)) {
+      throw new TypeError('radius should be greater than 0')
+    }
+    this.radius = newRadius
+  }
+})(Circle.prototype)
+
+var circle = new Circle(3)
+circle.setRadius(6)
+circle.getRadius() // 6
+circle.setRadius(0) // TypeError
+```
+
+#### privileged methods
+
+> are methods that are built inside the scope of a constructor and have access to private members (private variables)
+
+Example:
+
+```js
+function Circle(radius) {
+  // this is a privileged method
+  function getRadius() {
+    return radius
+  }
+  // and this one too
+  function setRadius(radius) {
+    radius = newRadius
+  }
+}
+```
+
+#### functional inheritance
+
+> So, we no longer depend on the `this` keyword, and instead we are using functions saving state in the closure of the private functions and returning the object with the API.
+>
+> Douglas Crockford calls these objects *durables*.
+>
+> Drawbacks for this approach are:
+>
+> * each instance holds a copy of every private member increasing memory
+> * whenever we need to call a "super" function (a method from the parent) we need to add the cruft code to do that, as the example with the `sphere` calling the `circle`'s `area` method.
+
+Example:
+
+```js
+function circle(radius) {
+  function getSetRadius() {
+    // I'm avoiding validation here
+    if (arguments.length > 0) {
+      radius = arguments[0]
+    }
+    return radius
+  }
+
+  function diameter () {
+    return radius * 2
+  }
+
+  function area () {
+    return radius * radius * Math.PI
+  }
+
+  return {
+    radius: getSetRadius,
+    diameter,
+    area
+  }
+}
+var circ = circle(6)
+circ.radius() // 6
+circ.radius(12) // 12
+circ.diameter() // 24
+
+// functional inheritance
+function sphere(radius) {
+  var sphereObj = circle(radius)
+  var circleArea = sphereObj.area
+
+  function area () {
+    return 4 * circleArea()
+  }
+
+  sphereObj.area = area
+
+  return sphereObj
+}
+var sphere1 = sphere(3)
+sphere1.area() // 133.09...
+```
 
 ### 7.5 Object Composition & Mixins
 
