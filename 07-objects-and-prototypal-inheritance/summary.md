@@ -348,6 +348,33 @@ sphere1.area() // 133.09...
 
 ### 7.5 Object Composition & Mixins
 
-#### `subtitle 7.5`
+#### the `Object.create` method (prototype-based inheritance)
 
-> definition
+> returns a new object with the object provided as its prototype. It can be used to provide simple-inheritance.
+
+Example:
+
+```js
+function Circle (radius) {
+  this.radius = radius
+}
+Circle.prototype.area = function () {
+  return this.radius * this.radius * Math.PI
+}
+var circle = new Circle(6)
+
+var Sphere = Object.create(circle)
+
+Sphere.area = function () {
+  return circle.area.call(this) * 4
+}
+
+var sphere = Object.create(Sphere)
+sphere.radius = 10
+
+sphere.area() // 1256.63...
+```
+
+#### mixins
+
+> provide a mechanism to share behavior between objects, in other words, you can have an object that extends its functionality by combining methods from different objects, resulting in a "merged" object with more "powers" (behaviors).

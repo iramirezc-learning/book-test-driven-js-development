@@ -775,6 +775,116 @@ describe('Chapter 07', () => {
   })
 
   describe('7.5 Object Composition and Mixins', () => {
+    describe('Object.create', () => {
+      it('should create new objects with the object provided as prototype', () => {
+        function Circle (radius) {
+          this.radius = radius
+        }
+        Circle.prototype.area = function () {
+          return this.radius * this.radius * Math.PI
+        }
+        var circle = new Circle(6)
 
+        var Sphere = Object.create(circle)
+
+        Sphere.area = function () {
+          return circle.area.call(this) * 4
+        }
+
+        var sphere = Object.create(Sphere)
+        sphere.radius = 10
+
+        assert.strictEqual(Math.round(sphere.area()), 1257)
+      })
+    })
+    describe('addToArray function', () => {
+      it('should add elements to the provided array', () => {
+        function addToArray () {
+          // this creates the arguments to an Array of arguments
+          var args = Array.prototype.slice.call(arguments)
+          // this removes the firs element from the arguments array
+          // that corresponds to the first argument provided which should
+          // be an array [] too
+          var arr = args.shift()
+          return arr.concat(args)
+        }
+
+        assert.deepStrictEqual(addToArray([0], 1, 2, 3), [0, 1, 2, 3], 'numbers should be added to the array')
+      })
+
+      it('should borrow the slice function from Array.prototype', () => {
+        function addToArray () {
+          arguments.slice = Array.prototype.slice
+          var args = arguments.slice()
+          var arr = args.shift()
+          return arr.concat(args)
+        }
+
+        assert.deepStrictEqual(addToArray([0], 1, 2, 3), [0, 1, 2, 3], 'numbers should be added to the array')
+      })
+    })
+    describe('for loops on null or undefined', () => {
+      it('should iterate over an obj that is null', () => {
+        var obj = null
+        var props = []
+
+        assert.doesNotThrow(() => {
+          for (var prop in obj) {
+            props.push(prop)
+          }
+        })
+        assert.strictEqual(props.length, 0)
+      })
+
+      it('should iterate over an obj that is undefined', () => {
+        var obj
+        var props = []
+
+        assert.doesNotThrow(() => {
+          for (var prop in obj) {
+            props.push(prop)
+          }
+        })
+        assert.strictEqual(props.length, 0)
+      })
+    })
+    describe('mixins', () => {
+      describe('enumerable', () => {
+        describe('implementation', () => {
+          after(() => {
+            delete Array.prototype.enumerable
+          })
+
+          it('should add enumerable methods to arrays', () => {
+            var enumerable = {
+              reject: function (callback) {
+                var result = []
+
+                this.forEach(val => {
+                  if (!callback(val)) {
+                    result.push(val)
+                  }
+                })
+
+                return result
+              }
+            }
+
+            tddjs.extend(Array.prototype, enumerable)
+
+            var even = [1, 2, 3, 4].reject((i) => {
+              return i % 2 === 1
+            })
+
+            assert.strictEqual(Array.prototype.reject, enumerable.reject, 'Array prototype should be extended')
+            assert.deepStrictEqual(even, [2, 4])
+          })
+        })
+
+        it('should be deleted from Array.prototype', () => {
+          assert.strictEqual(Array.prototype.enumerable, undefined)
+        })
+      })
+    })
   })
 })
