@@ -4,9 +4,13 @@
 
 ### 9.1 The Goal of Unobtrusive JavaScript
 
-#### `subtitle 9.1`
+#### advantages of this technique
 
-> definition
+> * Accessibility. Wider audience, better for screen readers and web crawlers. Better sense of content.
+> * Flexibility. Refactoring, tunning.
+> * Robustness. Progressive enhancement.
+> * Performance. Caching scripts.
+> * Extensibility. Separation of concerns. JS form the Markup
 
 ### 9.2 The Rules of Unobtrusive JavaScript
 
