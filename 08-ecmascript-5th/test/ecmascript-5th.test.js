@@ -297,6 +297,197 @@ describe('Chapter 08', () => {
   })
 
   describe('8.3 Strict mode', () => {
+    describe('global variables', () => {
+      it('should allow the creation of a global var', () => {
+        a123 = 2 // eslint-disable-line
+        assert.strictEqual(a123, 2) // eslint-disable-line
+      })
+
+      it('should not allow the use of eval', () => {
+        'use strict'
+        assert.throws(() => {
+          a456 = 2 // eslint-disable-line
+        }, /ReferenceError/)
+      })
+    })
+
+    describe('same parameters', () => {
+      it('should get the last value provided', () => {
+        const f = function (a, a, a) { // eslint-disable-line
+          return a
+        }
+        assert.strictEqual(f(1, 2, 3), 3, 'should return the last value')
+      })
+
+      it('should throw a SyntaxError', () => {
+        // NOTE: this can't be tested in unit tests, un-comment to see the error.
+        // assert.throws(() => {
+        //   'use strict'
+        //   function f (a, a, a) { // eslint-disable-line
+        //     return a
+        //   }
+        //   assert.strictEqual(f(1, 2, 3), 3, 'should return the last value')
+
+        // }, /SyntaxError/)
+      })
+    })
+
+    describe('arguments', () => {
+      it('should interchange the arguments', () => {
+        function switchArgs (a, b) {
+          const c = a
+          a = b
+          b = c
+          return [].slice.call(arguments)
+        }
+
+        assert.deepStrictEqual([2, 1], switchArgs(1, 2))
+      })
+
+      it('should not interchange the arguments', () => {
+        function switchArgs (a, b) {
+          'use strict'
+
+          const c = a
+          a = b
+          b = c
+          return [].slice.call(arguments)
+        }
+
+        assert.deepStrictEqual([1, 2], switchArgs(1, 2))
+      })
+    })
+
+    describe('this', () => {
+      it('should use global as this in a function', () => {
+        global._myGlobal1 = 'Hello'
+
+        function greet () {
+          return this._myGlobal1
+        }
+
+        assert.strictEqual(greet.call(), 'Hello')
+      })
+
+      it('should use not use global as this in a function', () => {
+        'use strict'
+        global._myGlobal1 = 'Hello'
+
+        function greet () {
+          return this._myGlobal1
+        }
+
+        assert.throws(() => {
+          greet.call()
+        }, /TypeError/)
+      })
+    })
+
+    describe('writable properties', () => {
+      it('should not throw an error if trying to change a non-writable property', () => {
+        const circle = {}
+        Object.defineProperty(circle, 'radius', {
+          value: 5
+        })
+        assert.strictEqual(circle.radius, 5)
+        circle.radius = 10
+        assert.strictEqual(circle.radius, 5, 'radius should not change')
+      })
+
+      it('should throw an error if trying to change a non-writable property', () => {
+        'use strict'
+        const circle = {}
+        Object.defineProperty(circle, 'radius', {
+          value: 5
+        })
+        assert.strictEqual(circle.radius, 5)
+        assert.throws(() => {
+          circle.radius = 10
+        }, /TypeError/)
+        assert.strictEqual(circle.radius, 5, 'radius should not change')
+      })
+    })
+
+    describe('extending objects', () => {
+      it('should not throw an error if trying to extend a seal object', () => {
+        const circle = {}
+        Object.preventExtensions(circle)
+        circle.radius = 10
+        assert.strictEqual(circle.radius, undefined, 'radius should not be defined')
+      })
+
+      it('should throw an error if trying to extend a seal object', () => {
+        'use strict'
+        const circle = {}
+        Object.preventExtensions(circle)
+        assert.throws(() => {
+          circle.radius = 10
+        }, /TypeError/)
+        assert.strictEqual(circle.radius, undefined, 'radius should not be defined')
+      })
+    })
+
+    describe('deleting properties', () => {
+      it('should not throw an error if trying to delete a non-configurable property', () => {
+        const circle = {}
+        Object.defineProperty(circle, 'radius', {
+          value: 5
+        })
+        assert.strictEqual(circle.radius, 5)
+        delete circle.radius
+        assert.strictEqual(circle.radius, 5, 'radius should not change')
+      })
+
+      it('should throw an error if trying to delete a non-configurable property', () => {
+        'use strict'
+        const circle = {}
+        Object.defineProperty(circle, 'radius', {
+          value: 5
+        })
+        assert.strictEqual(circle.radius, 5)
+        assert.throws(() => {
+          delete circle.radius
+        }, /TypeError/)
+        assert.strictEqual(circle.radius, 5, 'radius should not change')
+      })
+    })
+
+    describe('the with statement', () => {
+      it('should not throw an error if using with statement', () => {
+        const circle = { radius: 5 }
+        with (circle) {
+          radius = 6
+        }
+        assert.strictEqual(circle.radius, 6, 'radius should be changed')
+      })
+
+      it('should throw an error if using the with statement', () => {
+        // NOTE: this can't be tested in unit tests, un-comment to see the error.
+        // 'use strict'
+        // const circle = { radius: 5 }
+        // assert.throws(() => {
+        //   with (circle) {
+        //     radius = 6
+        //   }
+        // }, /SyntaxError/)
+      })
+    })
+
+    describe('octal number literals', () => {
+      it('should not throw an error if using using an octal number literal', () => {
+        const octal = 0377
+        const decimal = parseInt(octal)
+        assert.strictEqual(decimal, 255)
+      })
+
+      it('should throw an error if using an octal number literal', () => {
+        // NOTE: this can't be tested in unit tests, un-comment to see the error.
+        // 'use strict'
+        // assert.throws(() => {
+        //   const octal = 0377
+        // }, /SyntaxError/)
+      })
+    })
   })
 
   describe('8.4 Various additions and improvements', () => {
