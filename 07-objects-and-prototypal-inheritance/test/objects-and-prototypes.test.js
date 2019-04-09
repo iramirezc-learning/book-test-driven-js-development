@@ -795,6 +795,8 @@ describe('Chapter 07', () => {
         sphere.radius = 10
 
         assert.strictEqual(Math.round(sphere.area()), 1257)
+        assert.strictEqual(circle.isPrototypeOf(Sphere), true)
+        assert.strictEqual(Object.getPrototypeOf(Sphere), circle)
       })
     })
     describe('addToArray function', () => {
