@@ -74,12 +74,23 @@ const Circle = Object.create({}, {
 
 ### 8.3 Strict Mode
 
-#### `subtitle 8.3`
+#### important features supported by strict mode
 
-> definition
+> * not allowing creation of global variables
+> * not allowing parameters with the same name in a function
+> * not allowing the mutation of the parameters
+> * not coercing the `this` to the global object when not provided
+> * throwing an error when trying to change a non-writable property
+> * throwing an error when trying to extend a sealed object
+> * throwing an error when trying to delete a non-configurable property
+> * not allowing the with operator
+> * not allowing octal literals
 
 ### 8.4 Various Additions and Improvements
 
-#### `subtitle 8.4`
+#### other new features included in ECMAScript 5
 
-> definition
+> * native support for JSON (stringify, parse, and dates)
+> * Function.prototype.bind
+> * more static methods for Arrays (isArray)
+> * more instance methods for Arrays (filter, indexOf, lastIndexOf, every, some, forEach, map, reduce, reduceRight)

@@ -491,5 +491,27 @@ describe('Chapter 08', () => {
   })
 
   describe('8.4 Various additions and improvements', () => {
+    describe('JSON', () => {
+      it('should parse an object to JSON', () => {
+        const obj = {
+          name: 'Isaac',
+          age: 32
+        }
+        assert.strictEqual(JSON.stringify(obj), '{"name":"Isaac","age":32}')
+      })
+
+      it('should parse a JSON to an object', () => {
+        assert.deepStrictEqual(JSON.parse('{"name":"Isaac","age":32}'), {
+          name: 'Isaac',
+          age: 32
+        })
+      })
+
+      it('should parse a date to JSON', () => {
+        const d = new Date('1987-09-27')
+        assert.strictEqual(d.toJSON(), '1987-09-27T00:00:00.000Z')
+        assert.strictEqual(d.toJSON(), d.toISOString())
+      })
+    })
   })
 })
