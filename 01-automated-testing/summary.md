@@ -96,6 +96,7 @@
 > is vital to growing your application while preserving a good design.
 >
 > you've done it by:
+>
 > * Reusing code/methods. DRY (Don't Repeat Yourself)
 > * Renaming objects or functions
 >

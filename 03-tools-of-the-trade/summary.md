@@ -43,9 +43,11 @@
 #### `JsTestDriver` from Google
 
 > Advantages:
+>
 > * Automated browser tests
 > * Multiple machines, mobile devices
 > * Multiple browsers simultaneously
 >
 > Disadvantages:
+>
 > * Does NOT support Asynchronous code

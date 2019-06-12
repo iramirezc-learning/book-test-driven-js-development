@@ -47,6 +47,7 @@ Example:
 ```
 
 > **Benefits:**
+>
 > * Does not pollute the global scope
 > * Simulates block scope
 
@@ -129,5 +130,5 @@ const fibonacciMemoized = (function () {
 
 console.log(fibonacciMemoized(78)) // 8944394323791464 (very fast!)
 // NOTE: after fibonacciMemoized(79) results will be invalid due to number overflow.
-// fibonacciMemoized(79) will ouput: 14472334024676220 and correct is: 14472334024676221
+// fibonacciMemoized(79) will output: 14472334024676220 and correct is: 14472334024676221
 ```
