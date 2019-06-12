@@ -1,4 +1,4 @@
-/* globals describe it beforeEach */
+/* globals describe it before beforeEach */
 const assert = require('assert')
 
 const {
@@ -106,7 +106,12 @@ describe('Chapter 06', () => {
   describe('6.2 Immediately Called Anonymous Functions', () => {
     // see tddjs.test.js for complete tests
     describe('namespace - basic testing', () => {
+      before(() => {
+        delete tddjs.dom
+      })
+
       it('should work inside other objects', () => {
+        assertIsUndefined(tddjs.dom)
         const custom = { namespace: tddjs.namespace }
         custom.namespace('dom.event')
         assertIsObject(custom.dom.event)
