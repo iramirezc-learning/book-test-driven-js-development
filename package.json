@@ -4,5 +4,8 @@
     "bench:fibonacci": "node 06-applied-functions-and-closures/benchmarks/fibonacci.js",
     "test:spec": "mocha './**/*.spec.js'",
     "test": "mocha './**/*.test.js'"
+  },
+  "dependencies": {
+    "jsdom": "^15.1.1"
   }
 }
