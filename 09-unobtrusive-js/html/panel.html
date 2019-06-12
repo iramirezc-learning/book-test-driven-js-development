@@ -1,0 +1,66 @@
+<html>
+
+<head>
+  <style>
+    .js-tabs .section {
+      clear: left;
+      display: none;
+    }
+
+    .js-tabs .active-panel {
+      display: block;
+    }
+
+    .js-tabs .nav {
+      border-bottom: 1px solid #bbb;
+      margin: 0 0 6px;
+      overflow: visible;
+      padding: 0;
+    }
+
+    .js-tabs .nav li {
+      display: inline;
+      list-style: none;
+    }
+
+    .js-tabs .nav a {
+      background: #eee;
+      border: 1px solid #bbb;
+      line-height: 1.6;
+      padding: 3px 8px;
+    }
+
+    .js-tabs a.active-tab {
+      background: #fff;
+      border-bottom-color: #fff;
+      color: #000;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="tabbed-panel">
+    <ol id="news-tabs" class="nav">
+      <li><a href="#news">Latest news</a></li>
+      <li><a href="#sports">Sports</a></li>
+      <li><a href="#economy">Economy</a></li>
+    </ol>
+    <div class="section">
+      <h2><a name="news">Latest news</a></h2>
+      <p>Latest news contents [...]</p>
+    </div>
+    <div class="section">
+      <h2><a name="sports">Sports</a></h2>
+      <p>Sports contents [...]</p>
+    </div>
+    <div class="section">
+      <h2><a name="economy">Economy</a></h2>
+      <p>Economy contents [...]</p>
+    </div>
+  </div>
+  <script src="tdd.js"></script>
+  <script src="panel.js"></script>
+</body>
+
+</html>
