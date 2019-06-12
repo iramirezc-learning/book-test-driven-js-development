@@ -49,13 +49,13 @@ npm run test
 Loops (Chapter 04):
 
 ```sh
-node ./04-test-to-learn/benchmarks/loops.js
+npm run bench:loops
 ```
 
 Fibonacci (Chapter 06):
 
 ```sh
-node ./06-applied-functions-and-closures/benchmarks/fibonacci.js
+npm run bench:fibonacci
 ```
 
 Loops with timeout (Chapter 06):
