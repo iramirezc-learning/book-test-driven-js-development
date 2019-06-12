@@ -83,7 +83,7 @@ describe('Chapter 07', () => {
           /* eslint-enable no-extend-native */
         })
 
-        after(() => {
+        afterEach(() => {
           delete Array.prototype.sum
         })
 
