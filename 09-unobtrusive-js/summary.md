@@ -2,6 +2,12 @@
 
 ## Chapter 9: Unobtrusive JavaScript
 
+### What's Unobtrusive JavaScript
+
+> JavaScript applied to websites in a manner that increases user value, stays out of the user's way and enhances pages progressively in response to detected support.
+>
+> Unobtrusive JavaScript guides us in our quest for truly clean code; code that either works, or knowingly doesn’t; code that behaves in any environment for any user.
+
 ### 9.1 The Goal of Unobtrusive JavaScript
 
 #### advantages of this technique
