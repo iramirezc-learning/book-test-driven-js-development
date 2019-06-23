@@ -71,9 +71,9 @@ describe('Chapter 07', () => {
 
     describe('ArrayLoopTest', () => {
       describe('set up & implementation', () => {
-        before(() => {
+        beforeEach(() => {
           /* eslint-disable no-extend-native */
-          Array.prototype.sum = function () {
+          Array.prototype.sum = function sum () {
             let sum = 0
             for (let i = 0; i < this.length; i++) {
               sum += this[i]
@@ -854,7 +854,7 @@ describe('Chapter 07', () => {
       describe('enumerable', () => {
         describe('implementation', () => {
           after(() => {
-            delete Array.prototype.enumerable
+            delete Array.prototype.reject
           })
 
           it('should add enumerable methods to arrays', () => {
@@ -884,7 +884,7 @@ describe('Chapter 07', () => {
         })
 
         it('should be deleted from Array.prototype', () => {
-          assert.strictEqual(Array.prototype.enumerable, undefined)
+          assert.strictEqual(Array.prototype.reject, undefined)
         })
       })
     })
