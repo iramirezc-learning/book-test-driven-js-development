@@ -107,15 +107,15 @@ describe('Chapter 06', () => {
     // see tddjs.test.js for complete tests
     describe('namespace - basic testing', () => {
       before(() => {
-        delete tddjs.dom
+        delete tddjs.custom
       })
 
       it('should work inside other objects', () => {
-        assertIsUndefined(tddjs.dom)
+        assertIsUndefined(tddjs.custom)
         const custom = { namespace: tddjs.namespace }
-        custom.namespace('dom.event')
-        assertIsObject(custom.dom.event)
-        assertIsUndefined(tddjs.dom)
+        custom.namespace('my.event')
+        assertIsObject(custom.my.event)
+        assertIsUndefined(tddjs.my)
       })
     })
   })

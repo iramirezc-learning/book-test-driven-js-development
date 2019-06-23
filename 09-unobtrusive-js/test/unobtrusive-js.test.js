@@ -187,7 +187,7 @@ describe('Chapter 09', () => {
         const controller = tabController.create(ol)
 
         assert.strictEqual(ol.parentNode.className, 'tabbed-panel')
-        tddjs.ui.dom.addClassName(ol.parentNode, 'js-tabs')
+        tddjs.dom.addClassName(ol.parentNode, 'js-tabs')
         assert.strictEqual(ol.parentNode.className, 'tabbed-panel js-tabs')
 
         let previous
@@ -196,8 +196,8 @@ describe('Chapter 09', () => {
         controller.onTabChange = function (curr, prev) {
           previous = getPanel(prev)
           current = getPanel(curr)
-          tddjs.ui.dom.removeClassName(previous, 'active-panel')
-          tddjs.ui.dom.addClassName(current, 'active-panel')
+          tddjs.dom.removeClassName(previous, 'active-panel')
+          tddjs.dom.addClassName(current, 'active-panel')
         }
 
         // click the 'news' tab
