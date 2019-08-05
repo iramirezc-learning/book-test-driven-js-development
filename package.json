@@ -1,11 +1,24 @@
 {
+  "name": "test-driven-js-development",
+  "description": "Code & personal notes from the book [Test Driven JavaScript Development](https://www.amazon.com/Test-Driven-JavaScript-Development-Developers-Library/dp/0321683919) by Christian Johansen.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iramirezc/test-driven-js-development-book.git"
+  },
+  "author": "Isaac Ramírez <iramirezc@live.com.mx>",
+  "license": "ISC",
+  "homepage": "https://github.com/iramirezc/test-driven-js-development-book#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "jsdom": "^15.1.1",
+    "mocha": "^6.2.0"
+  },
   "scripts": {
     "bench:loops": "node 04-test-to-learn/benchmarks/loops.js",
     "bench:fibonacci": "node 06-applied-functions-and-closures/benchmarks/fibonacci.js",
     "test:spec": "mocha './**/*.spec.js'",
     "test": "mocha './**/*.test.js'"
-  },
-  "dependencies": {
-    "jsdom": "^15.1.1"
   }
 }
