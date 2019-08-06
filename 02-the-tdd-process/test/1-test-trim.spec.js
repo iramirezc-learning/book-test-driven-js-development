@@ -1,8 +1,8 @@
-const testCase = require('../../01-automated-testing/code/4-test-case')
-const assert = require('../../01-automated-testing/code/2-assert')
+const testCase = require('../../01-automated-testing/src/4-test-case')
+const assert = require('../../01-automated-testing/src/2-assert')
 
 // load trim
-require('./2-trim')
+require('../src/2-trim')
 
 testCase('String trim test', {
   'test trim should be a function': function () {

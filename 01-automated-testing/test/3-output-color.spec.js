@@ -1,7 +1,7 @@
-require('./1-strftime')
+require('../src/1-strftime')
 
-const assert = require('./2-assert')
-const output = require('./3-output-color')
+const assert = require('../src/2-assert')
+const output = require('../src/3-output-color')
 
 const date = new Date(2000, 11, 31)
 

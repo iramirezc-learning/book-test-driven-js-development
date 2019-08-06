@@ -1,5 +1,3 @@
-/* globals describe it after */
-
 const assert = require('assert')
 
 var _self = this

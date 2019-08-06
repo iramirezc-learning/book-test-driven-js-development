@@ -20,5 +20,15 @@
     "bench:fibonacci": "node 06-applied-functions-and-closures/benchmarks/fibonacci.js",
     "test:spec": "mocha './**/*.spec.js'",
     "test": "mocha './**/*.test.js'"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "it",
+      "after",
+      "afterEach",
+      "before",
+      "beforeEach"
+    ]
   }
 }

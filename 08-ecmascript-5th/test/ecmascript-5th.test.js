@@ -1,5 +1,3 @@
-/* globals describe it before after */
-
 const assert = require('assert')
 
 describe('Chapter 08', () => {

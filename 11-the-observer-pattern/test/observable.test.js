@@ -1,5 +1,3 @@
-/* globals describe it, beforeEach */
-
 const assert = require('assert')
 
 const Observable = require('../src/observable')

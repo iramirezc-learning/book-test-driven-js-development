@@ -1,4 +1,3 @@
-/* globals describe it before beforeEach */
 const assert = require('assert')
 
 const {
@@ -15,7 +14,7 @@ const tddjs = require('../../lib/tddjs')
 describe('Chapter 06', () => {
   describe('6.1 Binding Functions', () => {
     describe('light box - broken', () => {
-      let lightBox = {
+      const lightBox = {
         open: function open () {
           return this.create(true)
         },
@@ -23,8 +22,9 @@ describe('Chapter 06', () => {
           return success
         }
       }
+
       function anchorLightBox (anchor, options) {
-        let lb = Object.create(lightBox)
+        const lb = Object.create(lightBox)
         lb.url = anchor.href
         lb.title = anchor.title || anchor.href
         Object.assign(lb, options)
@@ -32,22 +32,24 @@ describe('Chapter 06', () => {
         anchor.onClick = lb.open
         return anchor
       }
+
       it('should throw an exception', () => {
         // because when calling a.onClick
         // 'this.create' will be undefined
         // since we are not binding the 'this' object
-        let a = anchorLightBox({
+        const a = anchorLightBox({
           href: 'www.example.com',
           title: 'my site',
           onClick: function noop () { }
         })
+
         assert.throws(() => {
           a.onClick()
         }, /TypeError/)
       })
     })
     describe('light box - fixed using closure', () => {
-      let lightBox = {
+      const lightBox = {
         open: function open () {
           return this.create(true)
         },
@@ -55,8 +57,9 @@ describe('Chapter 06', () => {
           return success
         }
       }
+
       function anchorLightBox (anchor, options) {
-        let lb = Object.create(lightBox)
+        const lb = Object.create(lightBox)
         lb.url = anchor.href
         lb.title = anchor.title || anchor.href
         Object.assign(lb, options)
@@ -66,17 +69,19 @@ describe('Chapter 06', () => {
         }
         return anchor
       }
+
       it('should not throw an exception', () => {
-        let a = anchorLightBox({
+        const a = anchorLightBox({
           href: 'www.example.com',
           title: 'my site',
           onClick: function noop () { }
         })
+
         assert.strictEqual(a.onClick(), true)
       })
     })
     describe('light box - fixed using bind', () => {
-      let lightBox = {
+      const lightBox = {
         open: function open () {
           return this.create(true)
         },
@@ -84,16 +89,18 @@ describe('Chapter 06', () => {
           return success
         }
       }
+
       function anchorLightBox (anchor, options) {
-        let lb = Object.create(lightBox)
+        const lb = Object.create(lightBox)
         lb.url = anchor.href
         lb.title = anchor.title || anchor.href
         Object.assign(lb, options)
         anchor.onClick = lb.open.bind(lb)
         return anchor
       }
+
       it('should not throw an exception', () => {
-        let a = anchorLightBox({
+        const a = anchorLightBox({
           href: 'www.example.com',
           title: 'my site',
           onClick: function noop () { }

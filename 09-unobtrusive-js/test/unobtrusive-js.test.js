@@ -1,5 +1,3 @@
-/* globals describe it beforeEach */
-
 const assert = require('assert')
 const { JSDOM } = require('jsdom')
 
@@ -38,14 +36,14 @@ describe('Chapter 09', () => {
     let lis
 
     beforeEach(() => {
-      dom = new JSDOM('<ol id="tabs">\
-          <li><a href="#news">News</a></li>\
-          <li><a href="#sports">Sports</a></li>\
-          <li><a href="#economy">Economy</a></li>\
-        </ol>')
+      dom = new JSDOM(`<ol id="tabs">\
+        <li><a href="#news">News</a></li>\
+        <li><a href="#sports">Sports</a></li>\
+        <li><a href="#economy">Economy</a></li>\
+      </ol>`)
       tabs = dom.window.document.getElementById('tabs')
-      links = tabs.getElementsByTagName("a")
-      lis = tabs.getElementsByTagName("li")
+      links = tabs.getElementsByTagName('a')
+      lis = tabs.getElementsByTagName('li')
     })
 
     describe('Tab Controller create test', () => {
@@ -211,7 +209,6 @@ describe('Chapter 09', () => {
         assert.strictEqual(previous, null, 'there should not be a previous tab selected')
         assert.strictEqual(current, newsSection, 'the news section should be the current selected section')
         assert.strictEqual(current.className, 'section active-panel', 'the news section should be the active panel')
-
 
         // click the 'economy' tab
         const economyTab = ol.getElementsByTagName('a')[2]

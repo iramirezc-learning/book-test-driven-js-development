@@ -1,6 +1,6 @@
-require('./1-strftime')
+require('../src/1-strftime')
 
-const assert = require('./2-assert')
+const assert = require('../src/2-assert')
 
 const date = new Date(2009, 9, 2)
 

@@ -1,7 +1,7 @@
 // node core module 'assert'
 const assert = require('assert')
 
-require('./1-strftime')
+require('../src/1-strftime')
 
 const now = new Date(2008, 8, 27)
 

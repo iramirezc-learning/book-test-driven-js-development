@@ -1,5 +1,3 @@
-/* globals describe it before after */
-
 const assert = require('assert')
 
 const tddjs = require('../../lib/tddjs')
@@ -102,7 +100,7 @@ describe('Chapter 07', () => {
           const array = [1, 2, 3, 4, 5]
           const result = []
 
-          for (let i in array) {
+          for (const i in array) {
             result.push(array[i])
           }
 
@@ -113,8 +111,8 @@ describe('Chapter 07', () => {
           const array = [1, 2, 3, 4, 5]
           const result = []
 
-          for (let i in array) {
-            if (array.hasOwnProperty(i)) {
+          for (const i in array) {
+            if (Object.hasOwnProperty.call(array, i)) {
               result.push(array[i])
             }
           }
@@ -130,8 +128,8 @@ describe('Chapter 07', () => {
           }
           const result = []
 
-          for (let prop in person) {
-            if (person.hasOwnProperty(prop)) {
+          for (const prop in person) {
+            if (Object.hasOwnProperty.call(person, prop)) {
               result.push(prop)
             }
           }
@@ -163,7 +161,7 @@ describe('Chapter 07', () => {
 
         const result = []
 
-        for (let prop in object) {
+        for (const prop in object) {
           result.push(prop)
         }
 
@@ -180,7 +178,7 @@ describe('Chapter 07', () => {
 
         const result = []
 
-        for (let prop in func) {
+        for (const prop in func) {
           result.push(prop)
         }
 
@@ -795,7 +793,7 @@ describe('Chapter 07', () => {
         sphere.radius = 10
 
         assert.strictEqual(Math.round(sphere.area()), 1257)
-        assert.strictEqual(circle.isPrototypeOf(Sphere), true)
+        assert.strictEqual(Object.isPrototypeOf.call(circle, Sphere), true)
         assert.strictEqual(Object.getPrototypeOf(Sphere), circle)
       })
     })

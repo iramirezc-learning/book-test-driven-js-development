@@ -1,7 +1,7 @@
-require('./1-strftime')
+require('../src/1-strftime')
 
-const testCase = require('./5-test-case-hooks')
-const assert = require('./2-assert')
+const testCase = require('../src/5-test-case-hooks')
+const assert = require('../src/2-assert')
 
 testCase('strftime test', {
   setUp: function () { // setUp is like a beforeEach
