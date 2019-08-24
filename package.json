@@ -13,7 +13,8 @@
   "dependencies": {},
   "devDependencies": {
     "jsdom": "^15.1.1",
-    "mocha": "^6.2.0"
+    "mocha": "^6.2.0",
+    "xmlhttprequest": "^1.8.0"
   },
   "scripts": {
     "bench:loops": "node 04-test-to-learn/benchmarks/loops.js",
