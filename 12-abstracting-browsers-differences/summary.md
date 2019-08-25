@@ -12,8 +12,18 @@
 
 #### Stubs...
 
-> Stubbing and mocking are two ways to create objects that mimic real objects in tests. Along with fakes and dummies, they are often collectively referred to as test doubles.
+> Stubbing and mocking are two ways to create objects that mimic real objects in tests. Along with `fakes` and `dummies`, they are often collectively referred to as `test doubles`.
 
 #### Test doubles
 
 > They usually implemented on tests when original implementations is awkward or when we need to isolate an interface from its dependencies.
+
+### 12.7 Reviewing the Request API
+
+### When TDD...
+
+> ...tests document your API.
+
+### Refactoring...
+
+> ... is perhaps the most valuable tool when it comes to producing clean code and removing duplication.
