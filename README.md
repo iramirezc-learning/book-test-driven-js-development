@@ -13,9 +13,9 @@ Code & personal notes from the book [Test Driven JavaScript Development](https:/
 * [Chapter 07. Objects and Prototypal Inheritance](./07-objects-and-prototypal-inheritance/summary.md)
 * [Chapter 08. ECMAScript 5th Edition](./08-ecmascript-5th/summary.md)
 * [Chapter 09. Unobtrusive JavaScript](./09-unobtrusive-js/summary.md)
-* Chapter 10. Feature Detection
-* Chapter 11. The Observer Pattern
-* Chapter 12. Abstracting Browser Differences: Ajax
+* [Chapter 10. Feature Detection](./10-feature-detection/summary.md)
+* [Chapter 11. The Observer Pattern](./11-the-observer-pattern/summary.md)
+* [Chapter 12. Abstracting Browser Differences: Ajax](./12-abstracting-browsers-differences/summary.md)
 * Chapter 13. Streaming Data with Ajax and Comet
 * Chapter 14. Server-Side JavaScript with Node.js
 * Chapter 15. TDD and DOM Manipulation: The Chat Client
@@ -32,7 +32,7 @@ npm install --global mocha
 
 ### Run xUnit specs
 
-> Only for chapters 1 and 2. Ignore the use of the `mocha` command
+> Only for chapters 1 and 2. Ignores the usage of `mocha` command
 
 ```sh
 npm run test:spec
