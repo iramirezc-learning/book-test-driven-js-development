@@ -7,7 +7,7 @@ const tddjs = require('../../lib/tddjs')
 const ajax = require('../src/ajax')
 
 describe('Chapter 12', () => {
-  describe.only('AJAX - unit test', () => {
+  describe('AJAX - unit test', () => {
     describe('create - method', () => {
       it('should return an XMLHttpRequest object', () => {
         const xhr = ajax.create()
