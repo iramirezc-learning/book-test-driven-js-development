@@ -72,13 +72,13 @@ const request = (function () {
 
   function _setDefaultHeader (transport, headers, header, value) {
     if (!headers[header]) {
-      transport.setRequestHeaders(header, value)
+      transport.setRequestHeader(header, value)
     }
   }
 
   function _setRequestHeaders (transport, options) {
     tddjs.each(options.headers, (key, val) => {
-      transport.setRequestHeaders(key, val)
+      transport.setRequestHeader(key, val)
     })
 
     if (options.method === 'POST' && options.data) {
