@@ -9,9 +9,9 @@ const tddjs = (function () {
   tddjs.isHostMethod = function (object, property) {
     const type = typeof object[property]
 
-    return type === 'function'
-      || (type === 'object' && !!object[property])
-      || type === 'unknown'
+    return type === 'function' ||
+      (type === 'object' && !!object[property]) ||
+      type === 'unknown'
   }
 
   /**
@@ -79,7 +79,6 @@ const tddjs = (function () {
         return event
       }
 
-
       if (tddjs.isHostMethod(document, 'addEventListener')) {
         console.info('using `addEventListener` method')
         return function _addEventHandler (element, event, listener) {
@@ -125,7 +124,7 @@ const tddjs = (function () {
       let current = null
 
       _addEventHandler(el, 'mouseover', function (event) {
-        // when there's no current selected or 
+        // when there's no current selected or
         // is different than the current element
         // trigger the listener
         if (current !== el) {
@@ -154,9 +153,9 @@ const tddjs = (function () {
     // register custom events
     const custom = dom.customEvents = {}
 
-    if (!tddjs.isEventSupported('mouseenter')
-      && tddjs.isEventSupported('mouseover')
-      && tddjs.isEventSupported('mouseout')) {
+    if (!tddjs.isEventSupported('mouseenter') &&
+      tddjs.isEventSupported('mouseover') &&
+      tddjs.isEventSupported('mouseout')) {
       console.info('registering custom events `mouseenter`')
       custom.mouseenter = mouseenter
     }
@@ -170,3 +169,5 @@ const tddjs = (function () {
 
   return tddjs
 }())
+
+window.tddjs = tddjs

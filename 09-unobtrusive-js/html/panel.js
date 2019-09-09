@@ -1,8 +1,10 @@
-(function () {
-  if (typeof document == "undefined" || !document.getElementById) return
+/* globals tddjs */
 
-  var dom = tddjs.dom;
-  var ol = document.getElementById("news-tabs");
+(function () {
+  if (typeof document === 'undefined' || !document.getElementById) return
+
+  var dom = tddjs.dom
+  var ol = document.getElementById('news-tabs')
 
   function getPanel (element) {
     if (!element || typeof element.href !== 'string') return null
@@ -19,14 +21,14 @@
   }
 
   try {
-    var controller = tddjs.ui.tabController.create(ol);
-    dom.addClassName(ol.parentNode, "js-tabs");
+    var controller = tddjs.ui.tabController.create(ol)
+    dom.addClassName(ol.parentNode, 'js-tabs')
     controller.onTabChange = function (curr, prev) {
-      dom.removeClassName(getPanel(prev), "active-panel");
-      dom.addClassName(getPanel(curr), "active-panel");
-    };
-    controller.activateTab(ol.getElementsByTagName("a")[0]);
+      dom.removeClassName(getPanel(prev), 'active-panel')
+      dom.addClassName(getPanel(curr), 'active-panel')
+    }
+    controller.activateTab(ol.getElementsByTagName('a')[0])
   } catch (e) {
     console.error(e)
   }
-}());
+}())

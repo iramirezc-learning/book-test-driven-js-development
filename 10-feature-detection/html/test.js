@@ -1,3 +1,5 @@
+/* globals tddjs */
+
 console.log('is `boxShadow` supported?', tddjs.isCSSPropertySupported('boxShadow'))
 console.log('is `circleShadow` supported?', tddjs.isCSSPropertySupported('circleShadow'))
 console.log('browser supports `mouseenter` event?', tddjs.dom.supportsEvent('mouseenter'))

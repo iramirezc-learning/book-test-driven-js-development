@@ -37,7 +37,6 @@ const tddjs = (function () {
 
     dom.addClassName(element, 'js-tab-controller')
 
-
     const tabs = Object.create(this) // 'this' point to tabController object
 
     element.onclick = function (event) {
@@ -67,7 +66,7 @@ const tddjs = (function () {
     dom.removeClassName(this.prevTab, className)
     dom.addClassName(element, className)
 
-    let prev = this.prevTab
+    const prev = this.prevTab
 
     this.prevTab = element
     this.onTabChange(element, prev)
@@ -86,3 +85,5 @@ const tddjs = (function () {
     }
   }
 }())
+
+window.tddjs = tddjs
