@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>Testing the AJAX implementation</h1>
+  <section>
+    <h2>Testing GET</h2>
+    <form>
+      <label for="get-endpoint">GET endpoint:</label>
+      <input type="text" name="get-endpoint" id="get-endpoint">
+      <button type="button" id="get-submit">GET</button>
+    </form>
+    <br>
+    <label for="get-body">Response body:</label>
+    <pre><code name="get-body" id="get-body"></code></pre>
+  </section>
+  <hr>
+  <section>
+    <h2>Testing POST</h2>
+    <form>
+      <label for="post-endpoint">POST endpoint:</label>
+      <input type="text" name="post-endpoint" id="post-endpoint">
+      <button type="button" id="post-submit">POST</button>
+    </form>
+    <br>
+    <label for="post-body">Response body:</label>
+    <pre><code name="post-body" id="post-body"></code></pre>
+  </section>
+  <script src="tddjs.js"></script>
+  <script src="ajax.js"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>
