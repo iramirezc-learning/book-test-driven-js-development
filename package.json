@@ -14,13 +14,15 @@
   "devDependencies": {
     "jsdom": "^15.1.1",
     "mocha": "^6.2.0",
+    "sinon": "^7.4.2",
     "xmlhttprequest": "^1.8.0"
   },
   "scripts": {
     "bench:loops": "node 04-test-to-learn/benchmarks/loops.js",
     "bench:fibonacci": "node 06-applied-functions-and-closures/benchmarks/fibonacci.js",
-    "test:spec": "mocha './**/*.spec.js'",
-    "test": "mocha './**/*.test.js'"
+    "test:spec": "mocha './{,!(node_modules)/**}/*.spec.js'",
+    "test": "mocha './{,!(node_modules)/**}/*.test.js'",
+    "test:debug": "yarn test --inspect-brk"
   },
   "standard": {
     "globals": [

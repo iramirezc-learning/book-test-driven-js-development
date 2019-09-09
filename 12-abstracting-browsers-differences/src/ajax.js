@@ -50,6 +50,8 @@ const request = (function () {
     } else {
       _isFunction(options.failure) && options.failure(transport)
     }
+
+    _isFunction(options.complete) && options.complete(transport)
   }
 
   function _setData (options) {
@@ -130,6 +132,52 @@ const post = function (url, options) {
   Ajax.request(url, _options)
 }
 
+const poll = function (url, options) {
+  const poller = Object.create(Ajax.poller)
+  const _options = options || {}
+
+  poller.url = url
+  poller.headers = _options.headers
+  poller.interval = _options.interval
+  poller.success = _options.success
+  poller.failure = _options.failure
+  poller.complete = _options.complete
+  poller.start()
+
+  return poller
+}
+
+const poller = {
+  start () {
+    const poller = this
+
+    if (!poller.url) {
+      throw new TypeError('Must specify URL to poll.')
+    }
+
+    let interval = 1000
+
+    if (typeof poller.interval === 'number') {
+      interval = poller.interval
+    }
+
+    Ajax.request(poller.url, {
+      headers: poller.headers,
+      success: poller.success,
+      failure: poller.failure,
+      complete: function () {
+        setTimeout(function () {
+          poller.start()
+        }, interval)
+
+        if (typeof poller.complete === 'function') {
+          poller.complete()
+        }
+      }
+    })
+  }
+}
+
 // Ajax Set Up
 Ajax.create = create
 
@@ -137,6 +185,8 @@ if (Ajax.create) {
   Ajax.request = request
   Ajax.get = get
   Ajax.post = post
+  Ajax.poller = poller
+  Ajax.poll = poll
 }
 
 Ajax.noop = function () { /* noop */ }

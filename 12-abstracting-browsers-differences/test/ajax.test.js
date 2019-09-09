@@ -23,15 +23,17 @@ describe('Chapter 12', () => {
       function forceStatusAndReadyState ({ url = '/url', xhr, status = 200, readyState = 4 }) {
         const success = stubFn()
         const failure = stubFn()
+        const complete = stubFn()
 
-        ajax.request(url, { success, failure })
+        ajax.request(url, { success, failure, complete })
 
         xhr.status = status
         xhr.readyStateChange(readyState)
 
         return {
           success: success.called,
-          failure: failure.called
+          failure: failure.called,
+          complete: complete.called
         }
       }
 
@@ -209,6 +211,26 @@ describe('Chapter 12', () => {
         it('should reset onreadystatechange when complete', () => {
           forceStatusAndReadyState({ xhr: this.xhr })
           assert.strictEqual(this.xhr.onreadystatechange, ajax.noop)
+        })
+      })
+
+      describe('ready state handler #chapter-13', () => {
+        it('should call complete handler for status 200', () => {
+          const request = forceStatusAndReadyState({ xhr: this.xhr, status: 200, readyState: 4 })
+
+          assert(request.complete)
+        })
+
+        it('should call complete handler for status 400', () => {
+          const request = forceStatusAndReadyState({ xhr: this.xhr, status: 400, readyState: 4 })
+
+          assert(request.complete)
+        })
+
+        it('should call complete handler for status 0', () => {
+          const request = forceStatusAndReadyState({ xhr: this.xhr, status: 0, readyState: 4 })
+
+          assert(request.complete)
         })
       })
     })
