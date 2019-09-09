@@ -172,15 +172,29 @@ const Ajax = {};
         interval = poller.interval
       }
 
-      Ajax.request(poller.url, {
-        method: poller.method,
+      // used as cache buster too
+      const requestStart = new Date().getTime()
+
+      let queryParams = `ts=${requestStart}`
+
+      if (poller.url.includes('?')) {
+        queryParams = `&${queryParams}`
+      } else {
+        queryParams = `?${queryParams}`
+      }
+
+      Ajax.request(`${poller.url}${queryParams}`, {
         headers: poller.headers,
         success: poller.success,
         failure: poller.failure,
         complete: function () {
+          const elapsed = new Date().getTime() - requestStart
+
+          const remaining = interval - elapsed
+
           setTimeout(function () {
             poller.start()
-          }, interval)
+          }, Math.max(0, remaining))
 
           if (typeof poller.complete === 'function') {
             poller.complete()

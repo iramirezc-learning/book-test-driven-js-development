@@ -29,13 +29,15 @@ describe('Chapter 13', () => {
 
   describe('Poller - unit test', () => {
     beforeEach(() => {
-      this.ajaxCreate = ajax.create
       this.xhr = Object.create(fakeXHR)
+      this.ajaxCreate = ajax.create
       ajax.create = stubFn(this.xhr)
+      this.ajaxRequest = ajax.request
     })
 
     afterEach(() => {
       ajax.create = this.ajaxCreate
+      ajax.request = this.ajaxRequest
     })
 
     it('should should be an object', () => {
@@ -47,16 +49,14 @@ describe('Chapter 13', () => {
     })
 
     describe('start - method', () => {
-      let clock
-
       beforeEach(() => {
-        clock = sinon.useFakeTimers()
+        this.clock = sinon.useFakeTimers(new Date())
         this.poller = Object.create(ajax.poller)
         this.poller.url = '/url'
       })
 
       afterEach(() => {
-        clock.restore()
+        this.clock.restore()
       })
 
       it('should throw an exception when url is no defined', () => {
@@ -72,7 +72,10 @@ describe('Chapter 13', () => {
         this.poller.start()
 
         assert(this.xhr.open.called)
-        assert.deepStrictEqual(this.xhr.open.args, expectedArgs)
+        assert.strictEqual(this.xhr.open.args[0], expectedArgs[0])
+        assert(this.xhr.open.args[1].includes(expectedArgs[1]))
+        assert.strictEqual(this.xhr.open.args[2], expectedArgs[2])
+
         assert(this.xhr.send.called)
       })
 
@@ -83,8 +86,7 @@ describe('Chapter 13', () => {
 
         this.xhr.complete() // simulate completion
         this.xhr.send = stubFn() // new stub for a second call to send
-
-        clock.tick(1001)
+        this.clock.tick(1001)
 
         assert(this.xhr.send.called)
       })
@@ -93,8 +95,8 @@ describe('Chapter 13', () => {
         this.poller.start()
         this.xhr.complete()
         this.xhr.send = stubFn()
+        this.clock.tick(999)
 
-        clock.tick(999)
         assertIsFalse(this.xhr.send.called)
       })
 
@@ -103,10 +105,12 @@ describe('Chapter 13', () => {
         this.poller.start()
         this.xhr.complete()
         this.xhr.send = stubFn()
+        this.clock.tick(349)
 
-        clock.tick(349)
         assertIsFalse(this.xhr.send.called)
-        clock.tick(1)
+
+        this.clock.tick(1)
+
         assert(this.xhr.send.called)
       })
 
@@ -144,6 +148,42 @@ describe('Chapter 13', () => {
         this.xhr.complete(400)
 
         assert(this.poller.complete.called)
+      })
+
+      it('should re-request immediately after long request', () => {
+        // NOTE: the author suggests the use of the 'stubDateConstructor'
+        // implemented in chapter 13, but Sinon also fakes Date constructor
+        // so I'm using advantage of it.
+        this.poller.interval = 500
+        this.poller.start() // make first call
+        this.clock.tick(600) // simulate time has passed
+
+        ajax.request = stubFn() // stub request for second call
+
+        this.xhr.complete() // simulate first completion
+        this.clock.tick(0) // simulate time has passed
+
+        assert(ajax.request.called)
+      })
+
+      it('should add cache buster to URL', () => {
+        const date = new Date()
+        const ts = date.getTime()
+        const url = '/url'
+
+        this.poller.url = url
+        this.poller.start()
+        assert.strictEqual(this.xhr.open.args[1], `${url}?ts=${ts}`)
+      })
+
+      it('should keep existing params in the URL', () => {
+        const date = new Date()
+        const ts = date.getTime()
+        const url = '/url?a=1&b=2'
+
+        this.poller.url = url
+        this.poller.start()
+        assert.strictEqual(this.xhr.open.args[1], `${url}&ts=${ts}`)
       })
     })
   })

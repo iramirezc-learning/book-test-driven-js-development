@@ -48,3 +48,11 @@
 > * HTML5 Web Sockets
 >   * Disadvantages: not widely supported yet.
 >   * Advantages: offers a full-duplex communication channel, which can held open for as long as required and allows true streaming of data between client and server with proper error handling.
+
+### 13.3 Long Polling XMLHttpRequest
+
+#### Long Polling
+
+> * behaves like Regular Polling
+> * not suitable for servers that do one thread-per-connection because this model does not scale well with long polling
+> * its main goal is low latency
