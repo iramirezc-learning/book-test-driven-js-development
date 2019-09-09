@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>Testing the AJAX implementation</h1>
+  <section>
+    <h2>Testing Poll</h2>
+    <form>
+      <label for="req-method">Request method:</label>
+      <select name="req-method" id="req-method">
+        <option value="GET">GET</option>
+        <option value="POST">POST</option>
+      </select>
+      <br>
+      <label for="req-url">Request URL:</label>
+      <input type="text" name="req-url" id="req-url">
+      <br>
+      <label for="req-interval">Request interval:</label>
+      <input type="number" name="req-interval" id="req-interval" value="1000" step="1000">
+      <br>
+      <button type="button" id="req-submit">Start Polling</button>
+    </form>
+    <br>
+    <label for="req-body">Response body:</label>
+    <pre><code name="req-body" id="req-body"></code></pre>
+  </section>
+  <script src="tddjs.js"></script>
+  <script src="ajax.js"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>
