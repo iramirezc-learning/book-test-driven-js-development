@@ -3,7 +3,7 @@ const assert = require('assert')
 describe('Chapter 08', () => {
   describe('8.1 The close future of JavaScript', () => {
     it('should be nothing to test', () => {
-      assert.strictEqual(true, true)
+      assert(true)
     })
   })
 
