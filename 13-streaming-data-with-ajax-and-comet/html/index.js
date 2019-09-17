@@ -32,4 +32,30 @@
       }
     })
   })
+
+  /**
+   * Comet client
+   */
+  const cometClient = Object.create(Ajax.cometClient)
+  const cometUrl = document.getElementById('comet-url')
+  const topicInput = document.getElementById('comet-topic')
+  const observeBtn = document.getElementById('comet-observe')
+  const observers = document.getElementById('observers')
+
+  observeBtn.addEventListener('click', () => {
+    const topic = topicInput.value
+    const observerNode = document.createElement('code')
+
+    observerNode.innerHTML = `<h3>${topic}</h3>`
+
+    const observerCallback = function (data) {
+      writeResponse(observerNode, data)
+    }
+
+    observers.appendChild(observerNode)
+
+    cometClient.url = cometUrl.value
+    cometClient.observe(topic, observerCallback)
+    cometClient.connect()
+  })
 })()

@@ -6,11 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <style>
+    body {
+      display: grid;
+      grid-template-rows: auto auto;
+      grid-template-columns: 50% 50%
+    }
+
+    body h1 {
+      grid-column: 1 / 3;
+    }
+
+    #observers {
+      display: flex;
+    }
+  </style>
 </head>
 
 <body>
   <h1>Testing the AJAX implementation</h1>
-  <section>
+  <section id="polling">
     <h2>Testing Poll</h2>
     <form>
       <label for="req-method">Request method:</label>
@@ -31,8 +46,29 @@
     <label for="req-body">Response body:</label>
     <pre><code name="req-body" id="req-body"></code></pre>
   </section>
+  <section id="comet">
+    <h2>Testing Comet Client</h2>
+    <form>
+      <label for="comet-url">Comet URL:</label>
+      <input type="text" name="comet-url" id="comet-url">
+      <article>
+        <em>Note: server should respond with a payload like:</em>
+        <br>
+        <code>{ topic1: ["event1", "event2"], topic2: ["eventN"]}</code>
+      </article>
+      <br>
+      <label for="comet-topic">Topic:</label>
+      <input type="text" name="comet-topic" id="comet-topic">
+      <button type="button" id="comet-observe">Observe</button>
+      <br>
+    </form>
+    <br>
+    <label for="observers">Observers:</label>
+    <pre id="observers" name="observers"></pre>
+  </section>
   <script src="tddjs.client.js"></script>
   <script src="ajax.client.js"></script>
+  <script src="observable.client.js"></script>
   <script src="index.js"></script>
 </body>
 
