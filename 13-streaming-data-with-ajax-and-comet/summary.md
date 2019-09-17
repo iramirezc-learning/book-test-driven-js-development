@@ -56,3 +56,7 @@
 > * behaves like Regular Polling
 > * not suitable for servers that do one thread-per-connection because this model does not scale well with long polling
 > * its main goal is low latency
+
+### 13.4 The Comet Client
+
+> nothing to comment
