@@ -2,6 +2,10 @@
 
 Code & personal notes from the book [Test Driven JavaScript Development](https://www.amazon.com/Test-Driven-JavaScript-Development-Developers-Library/dp/0321683919) by Christian Johansen.
 
+## Book site
+
+https://www.tddjs.com/
+
 ## Summaries
 
 * [Chapter 01. Automated Testing](./01-automated-testing/summary.md)
@@ -16,7 +20,7 @@ Code & personal notes from the book [Test Driven JavaScript Development](https:/
 * [Chapter 10. Feature Detection](./10-feature-detection/summary.md)
 * [Chapter 11. The Observer Pattern](./11-the-observer-pattern/summary.md)
 * [Chapter 12. Abstracting Browser Differences: Ajax](./12-abstracting-browsers-differences/summary.md)
-* Chapter 13. Streaming Data with Ajax and Comet
+* [Chapter 13. Streaming Data with Ajax and Comet](./13-streaming-data-with-ajax-and-comet/summary.md)
 * Chapter 14. Server-Side JavaScript with Node.js
 * Chapter 15. TDD and DOM Manipulation: The Chat Client
 * Chapter 16. Mocking and Stubbing
