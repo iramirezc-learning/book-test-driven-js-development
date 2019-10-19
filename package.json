@@ -22,7 +22,8 @@
     "bench:fibonacci": "node 06-applied-functions-and-closures/benchmarks/fibonacci.js",
     "test:spec": "mocha './{,!(node_modules)/**}/*.spec.js'",
     "test": "mocha './{,!(node_modules)/**}/*.test.js'",
-    "test:debug": "yarn test --inspect-brk"
+    "test:debug": "yarn test --inspect-brk",
+    "server": "nodemon ./server"
   },
   "standard": {
     "globals": [
