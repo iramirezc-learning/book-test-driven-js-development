@@ -1,53 +1,29 @@
 module.exports = {
-  addMessage (user, message, cb) {
-    process.nextTick(() => {
-      let err = null
-      let data
+  addMessage (user, message) {
+    console.log(user, message)
 
-      if (!user) {
-        err = new TypeError('user is required')
+    return new Promise((resolve, reject) => {
+      if (!user) return reject(new TypeError('user is required'))
+      if (!message) return reject(new TypeError('message is required'))
+
+      if (!this.messages) {
+        this.messages = []
       }
 
-      if (!message) {
-        err = new TypeError('message is required')
+      const data = {
+        id: this.messages.length + 1,
+        message,
+        user
       }
 
-      if (!err) {
-        if (!this.messages) {
-          this.messages = []
-        }
+      this.messages.push(data)
 
-        data = {
-          id: this.messages.length + 1,
-          message,
-          user
-        }
-
-        this.messages.push(data)
-      }
-
-      if (typeof cb === 'function') {
-        cb(err, data)
-      }
-
-      console.log(user, message)
+      resolve(data)
     })
   },
-  // TODO: this function should be asynchronous too
-  getMessagesSince (id, cb) {
-    if (typeof id === 'function') {
-      cb = id
-      id = 0
-    }
-
-    if (typeof cb !== 'function') {
-      return
-    }
-
-    if (!this.messages || this.messages.length === 0 || typeof id !== 'number') {
-      return cb(null, [])
-    }
-
-    return cb(null, this.messages.splice(id))
+  getMessagesSince (id) {
+    return new Promise((resolve) => {
+      resolve((this.messages || []).splice(id || 0))
+    })
   }
 }
