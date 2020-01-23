@@ -1,4 +1,11 @@
+.PHONY: server
 # Commands for Chat Server
 
-curl:
+send:
 	curl -d `cat server/test/fixtures/chat.txt` http://localhost:8000/comet
+
+get:
+	curl http://localhost:8000/comet
+
+server:
+	yarn server
