@@ -21,8 +21,8 @@ https://www.tddjs.com/
 * [Chapter 11. The Observer Pattern](./11-the-observer-pattern/summary.md)
 * [Chapter 12. Abstracting Browser Differences: Ajax](./12-abstracting-browsers-differences/summary.md)
 * [Chapter 13. Streaming Data with Ajax and Comet](./13-streaming-data-with-ajax-and-comet/summary.md)
-* Chapter 14. Server-Side JavaScript with Node.js
-* Chapter 15. TDD and DOM Manipulation: The Chat Client
+* [Chapter 14. Server-Side JavaScript with Node.js](./14-server-side-js-with-nodejs/summary.md)
+* [Chapter 15. TDD and DOM Manipulation: The Chat Client](./15-tdd-and-dom-manipulation/summary.md)
 * Chapter 16. Mocking and Stubbing
 * Chapter 17. Writing Good Unit Tests
 
