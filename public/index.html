@@ -18,13 +18,21 @@
       <input type="submit" value="Join">
     </fieldset>
   </form>
-  <dl id="messages"></dl>
+  <form id="messagesForm">
+    <fieldset>
+      <input type="text" name="message" id="message">
+      <input type="submit" value="Send">
+    </fieldset>
+  </form>
+  <dl id="messagesList"></dl>
   <!-- libs -->
   <script type="text/javascript" src="js/tdd.client.js"></script>
   <script type="text/javascript" src="js/observable.client.js"></script>
   <script type="text/javascript" src="js/ajax.client.js"></script>
   <!-- controllers -->
+  <script type="text/javascript" src="js/form.controller.js"></script>
   <script type="text/javascript" src="js/user-form.controller.js"></script>
+  <script type="text/javascript" src="js/message-form.controller.js"></script>
   <script type="text/javascript" src="js/message-list.controller.js"></script>
   <!-- chat.client should always go last -->
   <script type="text/javascript" src="js/chat.client.js"></script>

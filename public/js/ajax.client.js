@@ -104,7 +104,8 @@ const Ajax = {};
 
       if (options.method === 'POST' && options.data) {
         _setDefaultHeader(transport, options.headers, 'Content-Type', 'application/x-www-form-urlencoded')
-        _setDefaultHeader(transport, options.headers, 'Content-Length', options.data.length)
+        // commenting this line since this header is being sent automatically by the browser
+        // _setDefaultHeader(transport, options.headers, 'Content-Length', options.data.length)
       }
 
       _setDefaultHeader(transport, options.headers, 'X-Requested-With', 'XMLHttpRequest')
