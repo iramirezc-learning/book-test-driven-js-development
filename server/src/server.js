@@ -11,7 +11,7 @@ const serve = serveStatic(path.join(__dirname, '../../', 'public'))
 const server = http.createServer((req, res) => {
   console.log('REQUEST:', req.method, req.url)
 
-  if (String(req.url).toLowerCase() === '/comet') {
+  if (String(req.url).toLowerCase().includes('/comet')) {
     const controller = chatController.create(req, res)
     controller.chatRoom = room
     controller[req.method.toLowerCase()]()

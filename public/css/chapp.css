@@ -5,3 +5,7 @@ form {
 .js-chat {
     display: block;
 }
+
+.js-yellow {
+    background-color: yellow;
+}
