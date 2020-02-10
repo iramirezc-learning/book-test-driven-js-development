@@ -1,5 +1,40 @@
-form {
+html {
+    background: #f0f0f0;
+}
+
+form, dl {
     display: none;
+}
+
+body {
+    background: #fff;
+    border: 1px solid #333;
+    border-radius: 12px;
+    -moz-border-radius: 12px;
+    -webkit-border-radius: 12px;
+    box-shadow: 2px 2px 30px #666;
+    -moz-box-shadow: 2px 2px 30px #666;
+    -webkit-box-shadow: 2px 2px 30px #666;
+    height: 450px;
+    margin: 20px auto;
+    padding: 0 20px;
+    width: 600px;
+}
+
+form, fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+#messagesForm input {
+    padding: 3px;
+    width: 592px;
+}
+
+#messagesList {
+    height: 300px;
+    overflow: auto;
 }
 
 .js-chat {

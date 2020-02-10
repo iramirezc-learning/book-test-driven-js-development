@@ -10,13 +10,15 @@
   controller.handleSubmit = function (evt) {
     evt.preventDefault()
 
-    const message = this.view.getElementsByTagName('input')[0].value
+    const input = this.view.getElementsByTagName('input')[0]
 
-    if (!message) return
+    if (!input.value) return
 
     this.model.notify('message', {
       user: this.model.currentUser,
-      message
+      message: input.value
     })
+
+    input.value = ''
   }
 })()

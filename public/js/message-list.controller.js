@@ -13,30 +13,32 @@
     return msg
   }
 
-  controller.addMessage = (message) => {
-    if (controller.view && controller.dom) {
+  controller.addMessage = function (message) {
+    if (this.view && this.dom) {
       const user = message.user
 
-      if (controller.prevUser !== user) {
-        controller.prevUser = user
-        const dt = controller.dom.createElement('dt')
+      if (this.prevUser !== user) {
+        this.prevUser = user
+        const dt = this.dom.createElement('dt')
         dt.innerHTML = `@${user}`
-        controller.view.appendChild(dt)
+        this.view.appendChild(dt)
       }
 
-      const dd = controller.dom.createElement('dd')
+      const dd = this.dom.createElement('dd')
       dd.innerHTML = escapeHTML(message.message)
-      controller.view.appendChild(dd)
+      this.view.appendChild(dd)
 
-      if (controller.model && controller.model.currentUser) {
-        if (dd.innerHTML.includes(`@${controller.model.currentUser}`)) {
+      if (this.model && this.model.currentUser) {
+        if (dd.innerHTML.includes(`@${this.model.currentUser}`)) {
           dd.className += 'js-yellow'
         }
       }
+
+      this.view.scrollTop = this.view.scrollHeight
     }
   }
 
-  controller.setModel = model => {
+  controller.setModel = function (model) {
     if (typeof model !== 'object' || !model) {
       throw new TypeError('model object is required.')
     }
@@ -45,14 +47,14 @@
       throw new TypeError('model object does not support observe method.')
     }
 
-    const handler = controller.addMessage.bind(controller)
+    const handler = this.addMessage.bind(this)
     model.observe('message', handler)
-    controller.model = model
+    this.model = model
   }
 
-  controller.setView = (el, dom) => {
+  controller.setView = function (el, dom) {
     el.className = 'js-chat'
-    controller.view = el
-    controller.dom = dom // work around to pass the document object
+    this.view = el
+    this.dom = dom // work around to pass the document object
   }
 })()
