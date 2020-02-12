@@ -9,3 +9,7 @@ External resources recommended in the book.
 ## Chapter 2: The Test-Driven Development Process
 
 * **Book:** _Test Driven Development by Example. Kent Beck_
+
+## Chapter 16: Mocking and Stubbing
+
+* **Book:** _xUnit Test Patterns. Gerard Meszaros_

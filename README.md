@@ -1,6 +1,6 @@
 # Test-Driven JavaScript Development Book
 
-Code & personal notes from the book [Test Driven JavaScript Development](https://www.amazon.com/Test-Driven-JavaScript-Development-Developers-Library/dp/0321683919) by Christian Johansen.
+Code & personal notes of the book [Test Driven JavaScript Development](https://www.amazon.com/Test-Driven-JavaScript-Development-Developers-Library/dp/0321683919) by Christian Johansen.
 
 ## Book site
 
@@ -23,7 +23,7 @@ https://www.tddjs.com/
 * [Chapter 13. Streaming Data with Ajax and Comet](./13-streaming-data-with-ajax-and-comet/summary.md)
 * [Chapter 14. Server-Side JavaScript with Node.js](./14-server-side-js-with-nodejs/summary.md)
 * [Chapter 15. TDD and DOM Manipulation: The Chat Client](./15-tdd-and-dom-manipulation/summary.md)
-* Chapter 16. Mocking and Stubbing
+* [Chapter 16. Mocking and Stubbing](./16-mocking-and-stubbing/summary.md)
 * Chapter 17. Writing Good Unit Tests
 
 ## Tests
