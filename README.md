@@ -24,7 +24,7 @@ https://www.tddjs.com/
 * [Chapter 14. Server-Side JavaScript with Node.js](./14-server-side-js-with-nodejs/summary.md)
 * [Chapter 15. TDD and DOM Manipulation: The Chat Client](./15-tdd-and-dom-manipulation/summary.md)
 * [Chapter 16. Mocking and Stubbing](./16-mocking-and-stubbing/summary.md)
-* Chapter 17. Writing Good Unit Tests
+* [Chapter 17. Writing Good Unit Tests](./17-writing-good-unit-tests/summary.md)
 
 ## Tests
 
